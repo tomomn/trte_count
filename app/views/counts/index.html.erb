@@ -1,0 +1,18 @@
+<div class="contents row">
+  <div class="container">
+    <%= form_tag('/counts', method: :post) do %>
+      <h3>
+        文字数をカウントしたいタイトルのURLを入力してね
+      </h3>
+      <p>例：http://trte.jp/books/show/17</p>
+      <input placeholder="URL" type="text" name="url" size="30">
+      <input type="submit" value="集計開始！">
+    <% end %>
+  </div>
+
+<p><br>
+※文字数多いタイトルだと、数十秒かかります。気長に待ってね。<br>
+※トルタのタイトルURL以外は入力しないでね。
+</p>
+
+</div>

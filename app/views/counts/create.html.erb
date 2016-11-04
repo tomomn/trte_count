@@ -1,0 +1,27 @@
+  <div class="contents row">
+    <div class="success">
+
+      <h3>
+        タイトル：<%= @title %>(<%= @url %>)
+      </h3>
+      <h3>
+        合計文字数
+      </h3>
+  <p><%= @trte_all_counts %>文字</p>
+
+      <h3>
+        各話の文字数
+      </h3>
+
+        <% num = 1 %>
+        <p>
+        <% @trte_wa_counts.each do |count| %>
+        <%= num %>話：<%= count %><br>
+        <% num += 1 %>
+        <% end %>
+        </p>
+        <br>
+        <a class="btn" href="/">URL入力へ戻る</a><br><br><br>
+    </div>
+  </div>
+
