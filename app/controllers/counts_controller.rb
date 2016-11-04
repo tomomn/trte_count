@@ -35,20 +35,20 @@ class CountsController < ApplicationController
     end
 
 ##合計文字数をカウント
-    def trte_all_count(links)
-        agent = Mechanize.new
-        sum = 0
-        links.each do |link|
-        page = agent.get('http://trte.jp' + link)
-        elements = page.search('.l-view-body-inner')
-          elements.each do |ele|
-            ele_count = ele.inner_text.length
-          sum += ele_count
-          end
-        end
-      puts sum
-      return sum
-    end
+    # def trte_all_count(links)
+    #     agent = Mechanize.new
+    #     sum = 0
+    #     links.each do |link|
+    #     page = agent.get('http://trte.jp' + link)
+    #     elements = page.search('.l-view-body-inner')
+    #       elements.each do |ele|
+    #         ele_count = ele.inner_text.length
+    #       sum += ele_count
+    #       end
+    #     end
+    #   puts sum
+    #   return sum
+    # end
 
 ##話ごとの文字数をカウント
       def trte_wa_count(links)
@@ -65,11 +65,25 @@ class CountsController < ApplicationController
       return wa_counts
       end
 
+      def trte_all_count(counts)
+          sum = 0
+        counts.each do |count|
+          sum += count
+        end
+          return sum
+      end
+
+
       @url = params[:url]
       @title = get_title
       @get_urls = get_url
       @trte_wa_counts = trte_wa_count(@get_urls)
-      @trte_all_counts = trte_all_count(@get_urls)
+      # @trte_all_counts = trte_all_count(@get_urls)
+
+      @trte_all_counts = trte_all_count(@trte_wa_counts)
+
+
+
 
   end
 
