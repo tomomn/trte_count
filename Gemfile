@@ -46,5 +46,10 @@ group :development do
 
   gem 'mechanize'
   gem 'pry-rails'
+
+group :production, :staging do
+  gem 'rails_12factor'
+end
+
 end
 
