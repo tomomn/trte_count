@@ -8,9 +8,8 @@ class CountsController < ApplicationController
     def get_title
       agent = Mechanize.new
       next_url = params[:url]
-      current_page = agent.get(next_url)
-      elements = current_page.search('.item-data h2')
-      ele_title = elements.inner_text
+      current_page = agent.get(next_url).at('.item-data h2')
+      ele_title = current_page.inner_text
       return ele_title
     end
 
@@ -34,6 +33,39 @@ class CountsController < ApplicationController
       return links
     end
 
+
+
+##話ごとの文字数をカウント
+      def trte_wa_count(links)
+        agent = Mechanize.new
+        wa_counts = []
+        links.each do |link|
+        page = agent.get('http://trte.jp' + link).at('.l-view-body-inner')
+        wa_counts << page.inner_text.length
+        end
+      return wa_counts
+      end
+
+##合計文字数をカウント
+      def trte_all_count(counts)
+          sum = 0
+        counts.each do |count|
+          sum += count
+        end
+          return sum
+      end
+
+
+      @url = params[:url]
+      @title = get_title
+      @get_urls = get_url
+      @trte_wa_counts = trte_wa_count(@get_urls)
+      @trte_all_counts = trte_all_count(@trte_wa_counts)
+
+  end
+
+end
+
 ##合計文字数をカウント
     # def trte_all_count(links)
     #     agent = Mechanize.new
@@ -49,46 +81,6 @@ class CountsController < ApplicationController
     #   puts sum
     #   return sum
     # end
-
-##話ごとの文字数をカウント
-      def trte_wa_count(links)
-        agent = Mechanize.new
-        wa_counts = []
-        links.each do |link|
-        page = agent.get('http://trte.jp' + link)
-        elements = page.search('.l-view-body-inner')
-          elements.each do |ele|
-            ele_count = ele.inner_text.length
-            wa_counts << ele_count
-          end
-        end
-      return wa_counts
-      end
-
-      def trte_all_count(counts)
-          sum = 0
-        counts.each do |count|
-          sum += count
-        end
-          return sum
-      end
-
-
-      @url = params[:url]
-      @title = get_title
-      @get_urls = get_url
-      @trte_wa_counts = trte_wa_count(@get_urls)
-      # @trte_all_counts = trte_all_count(@get_urls)
-
-      @trte_all_counts = trte_all_count(@trte_wa_counts)
-
-
-
-
-  end
-
-end
-
 
 
 # class CountsController < ApplicationController
